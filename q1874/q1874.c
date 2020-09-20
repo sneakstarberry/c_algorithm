@@ -122,7 +122,7 @@ void c_print(){
 	c_Node * curr = c_Head;
 	c_Node * garbage;
 	while(1){
-		printf("%c", curr->data);
+		printf("%c\n", curr->data);
 		garbage = curr;
 		curr = curr->next;
 		free(garbage);
