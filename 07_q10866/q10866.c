@@ -56,7 +56,7 @@ int main(){
 				size();
 			}
 		} else if (!strcmp(cmd, "empty")){
-			printf("%d", empty());
+			printf("%d\n", empty());
 		} else if (!strcmp(cmd, "front")){
 			if(empty()){
 				printf("-1\n");
