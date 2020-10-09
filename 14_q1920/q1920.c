@@ -68,6 +68,18 @@ void scan(int input){
 	return;
 }
 
+void trash(t_Node * node){
+	t_Node * r = node->right;
+	t_Node * l = node->left;
+	if(r != NULL){
+		trash(r);
+	}
+	if(l != NULL){
+		trash(l);
+	}
+	free(node);
+}
+
 int main() {
 	scanf("%d", &N);
 	for(int i=0; i<N; i++){
@@ -80,6 +92,6 @@ int main() {
 		scanf("%d\n", &X[i]);
 		scan(X[i]);
 	}
-
+	trash(root);
 	return 0;
 }
