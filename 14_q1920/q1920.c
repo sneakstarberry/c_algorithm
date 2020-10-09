@@ -1,97 +1,102 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-typedef struct Node{
-	int data;
-	struct Node * left;
-	struct Node * right;
-}	t_Node;
+typedef struct Node {
+  int data;
+  struct Node *left;
+  struct Node *right;
 
-t_Node * root;
+} t_Node;
 
-int N, M, X[100001];
+t_Node *root;
 
-void push(int input){
-	if(root == NULL){
-		t_Node * node = malloc(sizeof(t_Node));
-		node->data = input;
-		node->left = NULL;
-		node->right = NULL;
-		root = node;
-		return;
-	}
-	t_Node * t = root;
-	while(1) {
-		t_Node * node = malloc(sizeof(t_Node));
-		if (t->data > input){
-			if(t->left == NULL){
-				node->data = input;
-				node->left = NULL;
-				node->right = NULL;
-				t->left = node;
-				return;
-			}
+int N, M;
 
-			t = t->left;
-		} else if (t->data < input){
-			if(t->right == NULL){
-				node->data = input;
-		 		node->left = NULL;
-				node->right = NULL;
-				t->right = node;
-				return;
-			}
+void push(int input) {
+  if (root == NULL) {
+    t_Node *node = malloc(sizeof(t_Node));
+    node->data = input;
+    node->left = NULL;
+    node->right = NULL;
+    root = node;
+    return;
+  }
+  t_Node *t = root;
+  t_Node * node = malloc(sizeof(t_Node));
+  while (t != NULL){
+    if (t->data > input) {
+      if (t->left == NULL) {
+        node->data = input;
+        node->left = NULL;
+        node->right = NULL;
+        t->left = node;
+        break;
+      }
 
-			t = t->right;
-		}
-	}
+      t = t->left;
+
+    } else if (t->data < input) {
+      if (t->right == NULL) {
+        node->data = input;
+        node->left = NULL;
+        node->right = NULL;
+        t->right = node;
+        break;
+      }
+
+      t = t->right;
+    }
+  }
+  return;
 }
 
-void scan(int input){
-	t_Node * t = root;
-	int ans = 0;
-	while(t!=NULL){
-		if (t->data == input){
-			printf("1");
-			return;
-		}
-		if(t->data < input){
-			if(t->right == NULL) break;
-			t = t->right;
-		}
-		if(t->data > input){
-			if(t->left == NULL)break;
-			t = t->left;
-		}
-	}
-	printf("0");
-	return;
+void scan(int input) {
+  t_Node *t = root;
+  while (t != NULL) {
+    if (t->data == input) {
+      printf("1\n");
+      return;
+    }
+    if (t->data < input) {
+      if (t->right == NULL)
+        break;
+      t = t->right;
+
+    } else if (t->data > input) {
+      if (t->left == NULL)
+        break;
+      t = t->left;
+    }
+  }
+  printf("0\n");
+  return;
 }
 
-void trash(t_Node * node){
-	t_Node * r = node->right;
-	t_Node * l = node->left;
-	if(r != NULL){
-		trash(r);
-	}
-	if(l != NULL){
-		trash(l);
-	}
-	free(node);
+void trash(t_Node *node) {
+  t_Node *r = node->right;
+  t_Node *l = node->left;
+  if (r != NULL) {
+    trash(r);
+  }
+  if (l != NULL) {
+    trash(l);
+  }
+  free(node);
 }
 
 int main() {
-	scanf("%d", &N);
-	for(int i=0; i<N; i++){
-		int tmp;
-		scanf("%d\n", &tmp);
-		push(tmp);
-	}
-	scanf("%d", &M);
-	for(int i=0; i<M; i++){
-		scanf("%d\n", &X[i]);
-		scan(X[i]);
-	}
-	trash(root);
-	return 0;
+  scanf("%d", &N);
+  for (int i = 0; i < N; i++) {
+    int tmp;
+    scanf("%d", &tmp);
+    push(tmp);
+  }
+  scanf("%d", &M);
+  for (int i = 0; i < M; i++) {
+    int tmp;
+    scanf("%d", &tmp);
+    scan(tmp);
+  }
+  trash(root);
+  return 0;
 }
